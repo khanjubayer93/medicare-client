@@ -1,8 +1,11 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { AuthContext } from './Context/AuthProvider';
 
-const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot }) => {
+const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot, refetch }) => {
+    const { user } = useContext(AuthContext)
     const { name, slots } = bookingSlot;
     const date = format(selectedDate, 'PP');
     const { register, handleSubmit } = useForm();
@@ -24,8 +27,26 @@ const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot }) => {
             email,
             phone,
         }
-        console.log(myBooking);
-        setBookingSlot(null)
+        // console.log(myBooking);
+        fetch('http://localhost:5000/bookings', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(myBooking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    toast.success("Booking confirmed")
+                    setBookingSlot(null);
+                    refetch();
+                }
+                else{
+                    toast.error(data.message)
+                }
+            })
     }
 
     return (
@@ -47,8 +68,8 @@ const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot }) => {
 
                         }
                     </select>
-                    <input  {...register("name")} type="text" placeholder="Name" className="input input-bordered w-full" />
-                    <input  {...register("email")} type="text" placeholder="Email" className="input input-bordered w-full" />
+                    <input  {...register("name")} defaultValue={user?.displayName} type="text" placeholder="Name" className="input input-bordered w-full" />
+                    <input  {...register("email")} defaultValue={user?.email} type="text" placeholder="Email" className="input input-bordered w-full" />
                     <input  {...register("phone")} type="text" placeholder="Phone" className="input input-bordered w-full" />
                     <button className='btn btn-ghost'>Submit</button>
                 </form>

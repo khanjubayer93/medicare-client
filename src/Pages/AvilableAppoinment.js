@@ -1,7 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Slider } from '../Slider/Slider';
-import AppoinmentCard from './AppoinmentCard';
 import BookingModal from './BookingModal';
 
 
@@ -9,18 +9,26 @@ import BookingModal from './BookingModal';
 
 
 const AvilableAppoinment = ({ selectedDate }) => {
-    const [slots, setSlots] = useState([]);
-    const [bookingSlot, setBookingSlot] = useState('')
-    // const [slides, setSlides] = useState([])
+    const [bookingSlot, setBookingSlot] = useState([]);
+    const date = format(selectedDate, "PP")
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/slots`)
-            .then(res => res.json())
-            .then(data => {
-                setSlots(data)
-                // setSlides(data)
-            })
-    }, [])
+    const { data: slots = [], refetch } = useQuery({
+        queryKey: ['slots', date],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/slots?date=${date}`)
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/slots`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setSlots(data)
+    //             // setSlides(data)
+    //         })
+    // }, [])
 
     return (
         <div className=''>
@@ -50,7 +58,7 @@ const AvilableAppoinment = ({ selectedDate }) => {
                     selectedDate={selectedDate}
                     bookingSlot={bookingSlot}
                     setBookingSlot={setBookingSlot}
-
+                        refetch={refetch}
                 ></BookingModal>
             }
         </div>
