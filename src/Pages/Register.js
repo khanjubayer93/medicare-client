@@ -1,11 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import useToken from '../CustomHooks/useToken';
 import { AuthContext } from './Context/AuthProvider';
 
 const Register = () => {
     const { register, handleSubmit, reset } = useForm();
     const { createUser, user, updateUserProfile } = useContext(AuthContext);
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail)
+    const navigate = useNavigate();
+    console.log(token);
+
+    if (token) {
+        navigate('/')
+    }
 
     const handleRegisterForm = data => {
         createUser(data.email, data.password)
@@ -17,10 +27,13 @@ const Register = () => {
                     photoURL: data.photoURL
                 }
                 updateUserProfile(profile)
-                    .then(() => { })
+                    .then(() => {
+                        storeUser(data.firstName, data.email)
+                        toast.success('User signed id successfully')
+                        reset();
+                    })
                     .catch(err => console.error(err))
-                toast.success('User signed id successfully')
-                reset();
+
 
             })
             .catch((error) => {
@@ -28,6 +41,22 @@ const Register = () => {
                 const errorMessage = error.message;
                 console.error(errorCode, errorMessage)
             });
+    };
+
+    const storeUser = (name, email) => {
+        const user = { name, email }
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCreatedUserEmail(email)
+                console.log(data);
+            })
     };
 
     return (

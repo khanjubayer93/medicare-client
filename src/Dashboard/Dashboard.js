@@ -1,5 +1,5 @@
 import React from 'react';
-import MyBookings from '../Pages/MyBookings';
+import MyBookings from './MyBookings';
 
 const Dashboard = () => {
     return (

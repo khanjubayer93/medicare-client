@@ -6,7 +6,7 @@ import { AuthContext } from './Context/AuthProvider';
 
 const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot, refetch }) => {
     const { user } = useContext(AuthContext)
-    const { name, slots } = bookingSlot;
+    const { name, slots, price } = bookingSlot;
     const date = format(selectedDate, 'PP');
     const { register, handleSubmit } = useForm();
 
@@ -26,6 +26,8 @@ const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot, refetch }) =>
             serviceName: name,
             email,
             phone,
+            price
+
         }
         // console.log(myBooking);
         fetch('http://localhost:5000/bookings', {
@@ -43,7 +45,7 @@ const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot, refetch }) =>
                     setBookingSlot(null);
                     refetch();
                 }
-                else{
+                else {
                     toast.error(data.message)
                 }
             })
