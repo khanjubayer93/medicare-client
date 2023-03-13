@@ -9,9 +9,9 @@ import "swiper/css/pagination";
 export const Slider = ({ slots, setBookingSlot }) => {
     return (
         <Swiper
-            className="w-3/4"
+            className="lg:w-3/4"
             // effect={"flip"}
-            
+
             spaceBetween={0}
             slidesPerView={2}
             cssMode={true}
@@ -19,11 +19,21 @@ export const Slider = ({ slots, setBookingSlot }) => {
             pagination={true}
             mousewheel={true}
             keyboard={true}
+            breakpoints={{
+                "@0.00": {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                "@1.50": {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+            }}
             modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         >
             {
                 slots.map(slot => <SwiperSlide
-                className="px-10 mb-10"
+                    className="px-10 mb-10"
                     key={slot._id}
                 >
                     <AppoinmentCard
