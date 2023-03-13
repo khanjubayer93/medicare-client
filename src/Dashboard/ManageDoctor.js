@@ -8,7 +8,7 @@ const ManageDoctor = () => {
     const { data: doctors = [], refetch } = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/doctors',{
+            const res = await fetch('https://medicare-server-ivory.vercel.app/doctors', {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('medicareToken')}`
                 }
@@ -20,7 +20,7 @@ const ManageDoctor = () => {
     });
     const handleDeleteDoctor = doctor => {
         console.log(doctor);
-        fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+        fetch(`https://medicare-server-ivory.vercel.app/doctors/${doctor._id}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',

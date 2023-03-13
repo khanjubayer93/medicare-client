@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
+import Loading from '../Components/Loading';
 import { AuthContext } from './Context/AuthProvider';
 
 const AllUser = () => {
@@ -9,17 +10,17 @@ const AllUser = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users')
+            const res = await fetch('https://medicare-server-ivory.vercel.app/users')
             const data = res.json();
             return data;
         }
     });
     if (loading) {
-        return <p>Loading...</p>
+        return <Loading></Loading>
     }
     const handleMakeAdmin = (id) => {
         console.log(id);
-        fetch(`http://localhost:5000/users/admin/${id}`, {
+        fetch(`https://medicare-server-ivory.vercel.app/users/admin/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('medicareToken')}`

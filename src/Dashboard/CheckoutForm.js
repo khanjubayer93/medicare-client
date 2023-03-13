@@ -15,7 +15,7 @@ const CheckoutForm = ({ paymentData }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://medicare-server-ivory.vercel.app/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ price }),
@@ -77,7 +77,7 @@ const CheckoutForm = ({ paymentData }) => {
             }
 
 
-            fetch('http://localhost:5000/payment', {
+            fetch('https://medicare-server-ivory.vercel.app/payment', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

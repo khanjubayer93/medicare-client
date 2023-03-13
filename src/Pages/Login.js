@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Loading from '../Components/Loading';
 import useToken from '../CustomHooks/useToken';
 import { AuthContext } from './Context/AuthProvider';
 // import { AuthContext } from '../Context/AuthProvider';
@@ -41,7 +42,7 @@ const Login = () => {
             });
     };
     if (loading) {
-        return <p>Loading...</p>
+        return <Loading></Loading>
     }
 
     return (

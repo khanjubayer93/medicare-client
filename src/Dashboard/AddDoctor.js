@@ -11,7 +11,7 @@ const AddDoctor = () => {
     const { data: specilities, isLoading } = useQuery({
         queryKey: ["specility"],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/slotSpeciality')
+            const res = await fetch('https://medicare-server-ivory.vercel.app/slotSpeciality')
             const data = await res.json();
             return data;
 
@@ -30,7 +30,7 @@ const AddDoctor = () => {
         })
             .then(res => res.json())
             .then(imgData => {
-                if(imgData.success){
+                if (imgData.success) {
                     console.log(imgData);
                     const doctor = {
                         name: data.name,
@@ -38,7 +38,7 @@ const AddDoctor = () => {
                         image: imgData.data.url,
                         speciality: data.speciality
                     }
-                    fetch('http://localhost:5000/doctors', {
+                    fetch('https://medicare-server-ivory.vercel.app/doctors', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
@@ -50,19 +50,19 @@ const AddDoctor = () => {
                         .then(res => res.json())
                         .then(doctor => {
                             console.log(doctor);
-                            if (doctor.acknowledged){
+                            if (doctor.acknowledged) {
                                 toast.success('Doctor added successfully')
                                 reset();
                             }
-                        }) 
+                        })
                 }
-                
+
             })
     }
     return (
         <div className='text-center my-20 w-full'>
-            <h2 className='mb-5 text-2xl text-slate-500 font-semibold'>Register Form</h2>
-            <form className='border-4 border-accent rounded-lg w-1/3 m-auto p-5' onSubmit={handleSubmit(handleAddDoctor)}>
+            <h2 className='mb-5 text-2xl text-slate-500 font-semibold'>Add Doctor</h2>
+            <form className='border-4 border-accent rounded-lg lg:w-1/3 md:w-1/2 m-auto p-5 sm:mx-5' onSubmit={handleSubmit(handleAddDoctor)}>
                 <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("name")} placeholder={'Name'} />
                 <br />
                 <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("email", { required: true })} placeholder={'Email'} />

@@ -15,14 +15,14 @@ const AvilableAppoinment = ({ selectedDate }) => {
     const { data: slots = [], refetch } = useQuery({
         queryKey: ['slots', date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/slots?date=${date}`)
+            const res = await fetch(`https://medicare-server-ivory.vercel.app/slots?date=${date}`)
             const data = await res.json();
             return data;
         }
     })
 
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/slots`)
+    //     fetch(`https://medicare-server-ivory.vercel.app/slots`)
     //         .then(res => res.json())
     //         .then(data => {
     //             setSlots(data)
@@ -58,7 +58,7 @@ const AvilableAppoinment = ({ selectedDate }) => {
                     selectedDate={selectedDate}
                     bookingSlot={bookingSlot}
                     setBookingSlot={setBookingSlot}
-                        refetch={refetch}
+                    refetch={refetch}
                 ></BookingModal>
             }
         </div>

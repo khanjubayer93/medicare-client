@@ -30,7 +30,7 @@ const BookingModal = ({ bookingSlot, selectedDate, setBookingSlot, refetch }) =>
 
         }
         // console.log(myBooking);
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://medicare-server-ivory.vercel.app/bookings', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
