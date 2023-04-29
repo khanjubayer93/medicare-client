@@ -46,9 +46,9 @@ const Login = () => {
     }
 
     return (
-        <div className='text-center my-40'>
+        <div className='text-center lg:my-40 mx-5 my-5'>
             <h2 className='mb-5 text-2xl text-slate-500 font-semibold'>Login Form</h2>
-            <form className='border-4 border-accent rounded-md w-1/3 m-auto py-16 px-5' onSubmit={handleSubmit(handleLoginForm)}>
+            <form className='border-4 border-accent rounded-md lg:w-1/3 m-auto py-16 px-5' onSubmit={handleSubmit(handleLoginForm)}>
 
                 <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("email", { required: true })} placeholder={'Email'} />
                 <br />

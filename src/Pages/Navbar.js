@@ -1,23 +1,43 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from './Context/AuthProvider';
 
 const Navbar = () => {
-    const { logOut, user } = useContext(AuthContext)
-    const navItems =
-        <React.Fragment>
-            <li><Link to='/'>Hoem</Link></li>
-            <li><Link to='/appoinment'>Appoinment</Link></li>
-            <li><Link>Contact Us</Link></li>
-        </React.Fragment>
+    const { logOut, user } = useContext(AuthContext);
+    const { pathname } = useLocation()
     const handleLogout = () => {
         logOut()
             .then(() => { })
             .catch(error => console.error(error))
     }
-    
+    const navItems =
+        <React.Fragment>
+            <li><Link to='/'>Hoem</Link></li>
+            <li><Link to='/appoinment'>Appoinment</Link></li>
+            <li><Link>Contact Us</Link></li>
+            <li className='lg:hidden'>
+                {
+                    user ?
+                        <>
+                            <Link to='/dashboard'>Dashboard</Link>
+                            <button className='ml-2' onClick={handleLogout}>Logout</button>
+                            <div className="tooltip tooltip-bottom" data-tip={user?.displayName}>
+                                <img className='h-12 w-12 rounded-full ml-2' src={user?.photoURL} alt="" />
+                            </div>
+
+                        </>
+                        :
+                        <>
+                            <Link to='/login' className="">Login</Link>
+                            <Link to='/register' className="">Register</Link>
+                        </>
+                }
+            </li>
+        </React.Fragment>
+
+
     return (
-        <div className="navbar bg-accent text-white mt-5 rounded-sm px-5 max-w-[1320px] m-auto sm:flex justify-between">
+        <div className="navbar bg-accent text-white mt-5 rounded-sm px-24 w-full lg:m-auto sm:flex justify-between">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={1} className="btn btn-ghost lg:hidden">
@@ -37,7 +57,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-end hidden lg:flex">
                 {
-                    user?.uid ?
+                    user ?
                         <>
                             <Link to='/dashboard'>Dashboard</Link>
                             <button className='ml-2' onClick={handleLogout}>Logout</button>
@@ -56,11 +76,12 @@ const Navbar = () => {
 
 
             </div>
-            <label
+            {pathname.includes("dashboard") && <label
                 htmlFor="dashboardDrawer"
                 tabIndex={3} className="btn btn-ghost lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-            </label>
+            </label>}
+
         </div>
     );
 };

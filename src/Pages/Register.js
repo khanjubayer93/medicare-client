@@ -60,9 +60,9 @@ const Register = () => {
     };
 
     return (
-        <div className='text-center my-20'>
+        <div className='text-center lg:my-20 m-5'>
             <h2 className='mb-5 text-2xl text-slate-500 font-semibold'>Register Form</h2>
-            <form className='border-4 border-accent rounded-lg w-1/3 m-auto p-5' onSubmit={handleSubmit(handleRegisterForm)}>
+            <form className='border-4 border-accent rounded-lg lg:w-1/3 m-auto p-5' onSubmit={handleSubmit(handleRegisterForm)}>
                 <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("firstName")} placeholder={'First name'} />
                 <br />
                 <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("lastName")} placeholder={'Last name'} />

@@ -17,7 +17,7 @@ const Payment = () => {
     }
     // console.log(data);
     return (
-        <div className='w-full'>
+        <div className='my-5 mx-5'>
             <h2 className="text-2xl font-bold text-slate">Payment</h2>
             <div>
                 <p className='text-xl'>Please pay <span className='font-bold text-red-500'>${price}</span> for <span className='font-bold'>{serviceName}</span> on <span className='font-bold'>{appointmentDate}</span><span> at {appointmentTime}</span></p>
@@ -29,7 +29,6 @@ const Payment = () => {
                     />
                 </Elements>
             </div>
-            <p></p>
         </div>
     );
 };

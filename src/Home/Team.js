@@ -17,33 +17,29 @@ const Team = () => {
     const { data: doctors = [], refetch } = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {
-            const res = await fetch('https://medicare-server-ivory.vercel.app/doctors', {
-                headers: {
-                    authorization: `bearer ${localStorage.getItem('medicareToken')}`
-                }
-            })
+            const res = await fetch('https://medicare-server-ivory.vercel.app/displayDoctors')
             const data = await res.json();
             return data;
         }
     });
-    const handleDeleteDoctor = doctor => {
-        console.log(doctor);
-        fetch(`https://medicare-server-ivory.vercel.app/doctors/${doctor._id}`, {
-            method: 'DELETE',
-            headers: {
-                'content-type': 'application/json',
-                authorization: `bearer ${localStorage.getItem('medicareToken')}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.deletedCount > 0) {
-                    console.log(data);
-                    refetch();
-                    toast.success('Deleted successfully')
-                }
-            })
-    }
+    // const handleDeleteDoctor = doctor => {
+    //     console.log(doctor);
+    //     fetch(`https://medicare-server-ivory.vercel.app/doctors/${doctor._id}`, {
+    //         method: 'DELETE',
+    //         headers: {
+    //             'content-type': 'application/json',
+    //             authorization: `bearer ${localStorage.getItem('medicareToken')}`
+    //         }
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.deletedCount > 0) {
+    //                 console.log(data);
+    //                 refetch();
+    //                 toast.success('Deleted successfully')
+    //             }
+    //         })
+    // }
     return (
         <Swiper
             className=''
@@ -77,9 +73,9 @@ const Team = () => {
             modules={[Pagination, Keyboard]}
         >
             {
-                doctors?.map(doctor => <SwiperSlide className="my-24 bg-white">
+                doctors?.map(doctor => <SwiperSlide className="my-24 bg-white border-2 h-auto">
                     <figure><img className='' src={doctor.image} alt="doctor" /></figure>
-                    <div className="p-5">
+                    <div className="p-5 ">
                         <h2 className="card-title mb-2">{doctor.name}</h2>
                         <p>{doctor.speciality}</p>
                         <p className='my-3'><small>Inventore dignissimos  velit itaque omnis! Cum earum laborum molestiae?</small></p>
@@ -97,9 +93,11 @@ const Team = () => {
                                 </Link>
                             </div>
                             <div>
-                                <button
-                                    onClick={() => handleDeleteDoctor(doctor)}
-                                    className='bg-red-500 px-2 py-1 rounded-md text-white hover:border-2 border-red-500 hover:bg-white hover:text-red-500 uppercase font-medium'><small>Delete</small></button>
+                                <Link>
+                                    <button
+                                        // onClick={() => handleDeleteDoctor(doctor)}
+                                        className='bg-red-500 px-2 py-1 rounded-md text-white  uppercase font-medium'><small>See more</small></button>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -101,7 +101,7 @@ const CheckoutForm = ({ paymentData }) => {
     return (
         <>
             <form
-                className='text-end w-2/5 border-2 border-green-400 p-5 rounded-md mt-10'
+                className='text-end lg:w-2/3 border-2 border-green-400 p-5 rounded-md mt-10 w-full'
                 onSubmit={handleSubmit}>
                 <CardElement
                     options={{

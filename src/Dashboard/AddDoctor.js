@@ -61,28 +61,30 @@ const AddDoctor = () => {
     }
     return (
         <div className='text-center my-20 w-full'>
-            <h2 className='mb-5 text-2xl text-slate-500 font-semibold'>Add Doctor</h2>
-            <form className='border-4 border-accent rounded-lg lg:w-1/3 md:w-1/2 m-auto p-5 sm:mx-5' onSubmit={handleSubmit(handleAddDoctor)}>
-                <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("name")} placeholder={'Name'} />
-                <br />
-                <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("email", { required: true })} placeholder={'Email'} />
-                <br />
-                <input type='file' className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("image", { required: true })} placeholder={'Image'} />
-                <br />
-                <select className="select select-bordered w-full mb-3"
-                    {...register("speciality")}
-                >
-                    <option disabled selected>Selet one</option>
-                    {
-                        specilities?.map(specility => <option
-                            key={specility._id}
-                        >{specility.name}</option>)
-                    }
+            <div>
+                <h2 className='mb-5 text-2xl text-slate-500 font-semibold'>Add Doctor</h2>
+                <form className='border-4 border-accent rounded-lg lg:w-1/3  m-auto p-5 w-full' onSubmit={handleSubmit(handleAddDoctor)}>
+                    <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("name")} placeholder={'Name'} />
+                    <br />
+                    <input className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("email", { required: true })} placeholder={'Email'} />
+                    <br />
+                    <input type='file' className='border-b-2 border-gray-300 focus:outline-none mb-3 w-full' {...register("image", { required: true })} placeholder={'Image'} />
+                    <br />
+                    <select className="select select-bordered w-full mb-3"
+                        {...register("speciality")}
+                    >
+                        <option disabled selected>Selet one</option>
+                        {
+                            specilities?.map(specility => <option
+                                key={specility._id}
+                            >{specility.name}</option>)
+                        }
 
-                </select>
-                <br />
-                <button className="bg-red-500 text-white py-2 px-6 font-semebold rounded-full hover:text-red-500 hover:font-semibold hover:bg-white border-2 hover:border-red-500">Add Doctor</button>
-            </form>
+                    </select>
+                    <br />
+                    <button className="bg-red-500 text-white py-2 px-6 font-semebold rounded-full hover:text-red-500 hover:font-semibold hover:bg-white border-2 hover:border-red-500">Add Doctor</button>
+                </form>
+            </div>
         </div>
     );
 };
